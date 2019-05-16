@@ -1,0 +1,24 @@
+{
+  "name": "rocket-exercise",
+  "version": "1.0.0",
+  "description": "test exercise Rocketmiles site",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@percy/cypress": "^1.0.9",
+    "cypress": "^3.2.0"
+  },
+  "scripts": {
+    "cypress:open": "cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muratkeremozcan/rocket-cypress.git"
+  },
+  "author": "Murat Ozcan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muratkeremozcan/rocket-cypress/issues"
+  },
+  "homepage": "https://github.com/muratkeremozcan/rocket-cypress#readme"
+}
