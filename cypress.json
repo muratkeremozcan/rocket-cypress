@@ -1,3 +1,5 @@
 {
-  "baseUrl": "https://www.rocketmiles.com/" 
+  "baseUrl": "https://www.rocketmiles.com/",
+  "viewportHeight": 1080,
+  "viewportWidth": 1920
 }
