@@ -10,7 +10,7 @@
     "faker": "^4.1.0"
   },
   "scripts": {
-    "cypress:open": "cypress open"
+    "cypress:open": "node_modules/.bin/cypress open",
   },
   "repository": {
     "type": "git",
