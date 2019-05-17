@@ -22,3 +22,15 @@ Execute tests headlessly:
 ```bash
 npm run cypress:run
 ```
+Using headless execution, you can execute consistency tests on the specs to ensure flake-freeness.
+
+Wrap the top `describe()` block in `Cypress._.times(<numRepeats>, () => { ... }` and execute headlessly.
+
+```javascript
+Cypress._.times(100, () => {
+  describe('...', () => { 
+    ... 
+  });
+});
+```
+> You can also execute in headed mode using `npm run cypress:open` but due to the amount of tests Cypress runner may crash in that scenario.
