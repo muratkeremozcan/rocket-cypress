@@ -14,7 +14,7 @@ describe('search', function () {
       searchBtn().should('be.visible').click();
       cy.server();
       cy.route('/rest/marketingPlacements**').as('marketing');
-      cy.wait('@marketing', { timeout: 10000 });
+      cy.wait('@marketing', { timeout: 15000 });
       
       cy.log('assert on the search result page');
       cy.url().should('include', 'search');
