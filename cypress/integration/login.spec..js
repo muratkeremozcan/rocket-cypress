@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 import * as mainPage from '../support/main-page.helper';
+import { selectGuests, selectRooms, populateEndDate } from '../support/commands';
 // const destinations = require('../fixtures/destinations.json');
 // const rewardPrograms = require('../fixtures/rewardPrograms.json');
 
@@ -41,23 +42,50 @@ describe('Initial login and form fill', function () {
     it('should perform form data input validation', function () {
 
       // record the values so they can be asserted against  
-      const destinationData = randomizeData(this.destinations), 
-            rewardData = randomizeData(this.rewardPrograms), 
-            guestData = randomNumUpTo(MAX_GUESTS), 
-            roomData = randomNumUpTo(MAX_ROOMS);
+      const destinationData = randomizeData(this.destinations),
+        rewardData = randomizeData(this.rewardPrograms),
+        guestData = randomNumUpTo(MAX_GUESTS),
+        roomData = randomNumUpTo(MAX_ROOMS);
 
-      cy.fillSearchForm(destinationData, rewardData, guestData, roomData);
+      // cy.fillSearchForm(destinationData, rewardData, guestData, roomData, true);
 
-      cy.log('assert form data validity');
       // we use siblings() here because the data to assert gets populated in a sibling DOM element
       // we do not use 'pop up does not exist assertion' because there can be multiple types of popups:
-        // 'please type slowly' or 'no offers available'
+      // 'please type slowly' or 'no offers available'
+      cy.selectDestination(destinationData);
       mainPage.destination().siblings().should('contain', destinationData);
+      
       // verify that we are not getting the 'Please choose a valid reward program' popup
+      cy.selectRewards(rewardData);
       cy.get('.popover-content').should('not.exist');
+      
       // drop downs are more idempotent in data checks since there are a limited amount of possible values, ok to assert as such:
+      selectGuests(guestData);
       mainPage.guests().should('contain', guestData);
+
+      selectRooms(roomData);
       mainPage.rooms().should('contain', roomData);
+
+      populateEndDate();
+      // dig into the DOM to extract the dates in milliseconds and compare them
+        // this is 100% swag that this value is related to time. 
+        // There could be better value to assert if development could be consulted, we could assert for a certain duration
+      mainPage.checkInDate().find('input').invoke('attr', 'id').then(elem1 => {
+        // extract the number out of the yielded value
+        const regex = /\d+/;
+        const checkInDateInMs = elem1.match(regex)[0];
+
+        mainPage.checkOutDate().find('input').invoke('attr', 'id').then(elem2 => {
+          const checkOutDateInMs = elem2.match(regex)[0];
+          expect(checkOutDateInMs).to.be.greaterThan(checkInDateInMs);
+        });
+        
+      });
+
     });
+
+
+
+
   });
 });
