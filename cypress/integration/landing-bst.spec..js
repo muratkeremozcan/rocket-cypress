@@ -1,5 +1,4 @@
 /// <reference types="Cypress" />
-
 describe('Landing page BST', () => {
 
   before('should login with a randomly generated email', () => {
