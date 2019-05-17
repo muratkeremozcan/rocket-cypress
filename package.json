@@ -3,10 +3,18 @@
   "version": "1.0.0",
   "description": "test exercise Rocketmiles",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.0",
+    "fb": "^2.0.0",
+    "method-override": "^3.0.0",
+    "pug": "^2.0.3"
+  },
   "devDependencies": {
-    "cypress": "^3.2.0",
-    "faker": "^4.1.0"
+    "cypress": "^3.3.0",
+    "faker": "^4.1.0",
+    "fbgraph": "^1.4.4"
   },
   "scripts": {
     "cypress:open": "cypress open",
