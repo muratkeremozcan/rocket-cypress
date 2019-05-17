@@ -2,6 +2,14 @@
 
 ### Goals and responsibilities of testing
 
+* requirements engineering, traceability, derivation
+* risk profile
+* Quality attributes
+* Util tree
+  * scenario description
+  * scenario refinement
+  * design strategy
+
 ### Assumptions & dependencies
 
 ## Test Scope
