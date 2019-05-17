@@ -1,6 +1,10 @@
 
 import { internet } from 'faker';
 import * as mainPage from './main-page.helper';
+const destinations = require('../fixtures/destinations.json');
+const rewardPrograms = require('../fixtures/rewardPrograms.json');
+
+
 /* 
 login: ideally you want to use a facebook test user to login to this application, 
 but facebook test users are app-specific and need to be created by the dev of the application
@@ -39,6 +43,21 @@ export function uiLogin() {
 
 }
 
+/** get the json data into an array and randomize */
+export const randomizeData = jsonData => {
+  const arrayOfData = Object.keys(jsonData).map(index => jsonData[index]);
+  const randomSelection = arrayOfData[Math.floor(Math.random() * arrayOfData.length)];
+  return randomSelection;
+}
+/** we need the random number to start at 1 for these, unlike the json indexes */
+export const randomNumUpTo = num => 1 + Math.floor(Math.random() * `${num}`);
+
+const MAX_ROOMS = 3,
+MAX_GUESTS = 5,
+destinationData = randomizeData(destinations),
+rewardData = randomizeData(rewardPrograms),
+guestData = randomNumUpTo(MAX_GUESTS),
+roomData = randomNumUpTo(MAX_ROOMS);
 /* 
   Here we chose to include assertions in the function because we need insurance that everything will work
     as we setup the base state of the application. 
@@ -46,7 +65,9 @@ export function uiLogin() {
     For these reasons we confidently include the assertions here
     In Cypress this is a best practice, and there is no downside because the logging mechanism is indifferent to failure diagnosis  
 */
-export function fillSearchForm(destination, rewardProgram, numGuests, numRooms) {
+// note to use of default parameters. If a parameter is not specified, a randomized value will be passed in
+// if you need to do form validation, leave out fields, you can utilized the packaged functions that this function uses
+export function fillSearchForm(destination = destinationData , rewardProgram = rewardData, numGuests = guestData, numRooms = roomData) {
 
     // we use siblings() here because the data to assert gets populated in a sibling DOM element
     // we do not use 'pop up does not exist assertion' because there can be multiple types of popups:
@@ -103,7 +124,7 @@ export function selectDestination(destination) {
 
   // the fields have to be typed slowly to replicate ux and avoid the 'type slowly' error
   cy.log('destination selection');
-  mainPage.destination().clear().type(destination, { delay: 60 }).type('{enter}');
+  mainPage.destination().clear().type(destination, { delay: 70 }).type('{enter}');
   // cy.wait('@restCall');
 }
 
@@ -153,14 +174,6 @@ export function populateEndDate() {
     */
 }
 
-/** get the json data into an array and randomize */
-export const randomizeData = jsonData => {
-  const arrayOfData = Object.keys(jsonData).map(index => jsonData[index]);
-  const randomSelection = arrayOfData[Math.floor(Math.random() * arrayOfData.length)];
-  return randomSelection;
-}
-/** we need the random number to start at 1 for these, unlike the json indexes */
-export const randomNumUpTo = num => 1 + Math.floor(Math.random() * `${num}`);
 
 Cypress.Commands.add('uiLogin', uiLogin);
 Cypress.Commands.add('fillSearchForm', fillSearchForm);

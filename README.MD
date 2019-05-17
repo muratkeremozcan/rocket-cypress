@@ -34,3 +34,5 @@ Cypress._.times(100, () => {
 });
 ```
 > You can also execute in headed mode using `npm run cypress:open` but due to the amount of tests Cypress runner may crash in that scenario.
+
+> Every test needs to be able to execute and fail in isolation. To test this you can put a .only() on any describe, context or it block and run the section by itself. You can also utilize .skip().
