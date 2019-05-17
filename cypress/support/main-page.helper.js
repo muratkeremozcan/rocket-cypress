@@ -25,3 +25,5 @@ export const n_guests = numGuests => cy.get(`.adults > .rm-select-base > .btn-gr
 export const rooms = () => cy.get('.rooms');
 export const roomDropdown = () => cy.get('.rooms > .rm-select-base > .btn-group > .dropdown-menu');
 export const n_rooms = numRooms => cy.get(`.rooms > .rm-select-base > .btn-group > .dropdown-menu > :nth-child(${numRooms}) > a`);
+
+export const searchBtn = () => cy.get('.rm-btn-orange');

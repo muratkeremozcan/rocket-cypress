@@ -39,37 +39,72 @@ export function uiLogin() {
 
 }
 
+/* 
+  Here we chose to include assertions in the function because we need insurance that everything will work
+    as we setup the base state of the application. 
+    like login this function will also be utilized to setup state for other tests
+    For these reasons we confidently include the assertions here
+    In Cypress this is a best practice, and there is no downside because the logging mechanism is indifferent to failure diagnosis  
+*/
 export function fillSearchForm(destination, rewardProgram, numGuests, numRooms) {
 
-  selectDestination(destination);
+    // we use siblings() here because the data to assert gets populated in a sibling DOM element
+    // we do not use 'pop up does not exist assertion' because there can be multiple types of popups:
+    // 'please type slowly' or 'no offers available'
+    cy.selectDestination(destination);
+    mainPage.destination().siblings().should('contain', destination);
+    
+    // verify that we are not getting the 'Please choose a valid reward program' popup
+    cy.selectRewards(rewardProgram);
+    cy.get('.popover-content').should('not.exist');
+    
+    // drop downs are more idempotent in data checks since there are a limited amount of possible values, ok to assert as such:
+    selectGuests(numGuests);
+    mainPage.guests().should('contain', numGuests);
 
-  selectRewards(rewardProgram);
+    selectRooms(numRooms);
+    mainPage.rooms().should('contain', numRooms);
 
-  selectGuests(numGuests);
+    // leave start date default for basic sanity
+    populateEndDate();
+    // dig into the DOM to extract the dates in milliseconds and compare them
+      // this is 100% swag that this value is related to time. 
+      // There could be better value to assert if development could be consulted, we could assert for a certain duration
+    mainPage.checkInDate().find('input').invoke('attr', 'id').then(elem1 => {
+      // extract the number out of the yielded value
+      const regex = /\d+/;
+      const checkInDateInMs = elem1.match(regex)[0];
 
-  selectRooms(numRooms);
+      mainPage.checkOutDate().find('input').invoke('attr', 'id').then(elem2 => {
+        const checkOutDateInMs = elem2.match(regex)[0];
+        expect(checkOutDateInMs).to.be.greaterThan(checkInDateInMs);
+      });
+      
+    });
 
-  // date begin : leave this as default (current date) for happy path
-  // you can set current time to a certain date with momentJS, however it is unknown how this will effect the search oracle,
-  // perhaps stabilizing time and stubbing the search results is an appropriate api test test for branch executions
-  // because, if you think about it, time is the only variable among all fields that cannot be constant
-
-  populateEndDate();
 
 }
 
-
-// note that local destination is prime candidate for programmatic login with the api because of the location allow permissions being asked
-// populating the load data with current location should be covered in that scenario; current location should be utilized instead of selecting a destination
+/* 
+  there are multiple ways to approach the destinations, and there are constrains
+  faker.js could be used, however rewards may not exist for any random location
+  faker.js could be limited a certain subset, however that still has a chance of not having rewards; test reliability is not guaranteed
+  the ultimate way is to get the destination data from the back-end and randomize the destination based on that
+  for our small-scale test goal we will create our own json file and randomize the selection from there
+  should include 1 click-nav scenario with 'Current location' because that is an edge case
+ 
+  note that local destination is prime candidate for programmatic login with the api because of the location allow permissions being asked
+  populating the load data with current location should be covered in that scenario; current location should be utilized instead of selecting a destination
+ */
 export function selectDestination(destination) {
   // define api routes to wait on, use them to eliminate flake in tests
-  cy.server();
-  cy.route('/rest/regions**').as('restCall');
+  // cy.server();
+  // cy.route('/rest/regions**').as('restCall');
 
   // the fields have to be typed slowly to replicate ux and avoid the 'type slowly' error
   cy.log('destination selection');
   mainPage.destination().clear().type(destination, { delay: 60 }).type('{enter}');
-  cy.wait('@restCall');
+  // cy.wait('@restCall');
 }
 
 export function selectRewards(rewardProgram) {
@@ -118,7 +153,14 @@ export function populateEndDate() {
     */
 }
 
-
+/** get the json data into an array and randomize */
+export const randomizeData = jsonData => {
+  const arrayOfData = Object.keys(jsonData).map(index => jsonData[index]);
+  const randomSelection = arrayOfData[Math.floor(Math.random() * arrayOfData.length)];
+  return randomSelection;
+}
+/** we need the random number to start at 1 for these, unlike the json indexes */
+export const randomNumUpTo = num => 1 + Math.floor(Math.random() * `${num}`);
 
 Cypress.Commands.add('uiLogin', uiLogin);
 Cypress.Commands.add('fillSearchForm', fillSearchForm);
@@ -127,3 +169,5 @@ Cypress.Commands.add('selectRewards', selectRewards);
 Cypress.Commands.add('selectGuests', selectGuests);
 Cypress.Commands.add('selectRooms', selectRooms);
 Cypress.Commands.add('populateEndDate', populateEndDate);
+Cypress.Commands.add('randomizeData', randomizeData);
+Cypress.Commands.add('randomNumUpTo', randomNumUpTo);
