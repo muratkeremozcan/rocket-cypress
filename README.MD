@@ -18,3 +18,7 @@ Start Cypress:
 ```bash
 npm run cypress:open
 ```
+Execute tests headlessly:
+```bash
+npm run cypress:run
+```

@@ -1,7 +1,7 @@
 {
   "name": "rocket-exercise",
   "version": "1.0.0",
-  "description": "test exercise Rocketmiles site",
+  "description": "test exercise Rocketmiles",
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
@@ -10,7 +10,8 @@
     "faker": "^4.1.0"
   },
   "scripts": {
-    "cypress:open": "node_modules/.bin/cypress open",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "repository": {
     "type": "git",
