@@ -2,13 +2,11 @@
 
 ### Goals and responsibilities of testing
 
-* requirements engineering, traceability, derivation
-* risk profile
-* Quality attributes
-* Util tree
-  * scenario description
-  * scenario refinement
-  * design strategy
+* Verification & validation
+* Defects & diagnosis
+* Risk reduction
+* Issue prevention & speed up development
+* Coverage
 
 ### Assumptions & dependencies
 
@@ -21,6 +19,11 @@
 ### Features to be tested
 
 ### Non-functional requirements to be tested
+* Quality attributes
+* Util tree
+  * scenario description
+  * scenario refinement
+  * design strategies
 
 ## Test Strategy and approach
 
