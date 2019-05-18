@@ -63,4 +63,3 @@ cd fb-api
 node bst.spec.js
 ```
 Alternatively, you can use Quokka vsCode extension. Keyboard shortcut `ctrl+P >` then type Quokka start.
-
