@@ -1,9 +1,8 @@
 /// <reference types="Cypress" />
 import { searchBtn } from './../support/main-page.helper';
 
-Cypress._.times(2, () => {
 describe('search', function () {
-
+  Cypress.env('RETRIES', 3);
   before(function () {
     cy.uiLogin();
   });
@@ -43,5 +42,4 @@ describe('search', function () {
 
   });
 
-});
 });

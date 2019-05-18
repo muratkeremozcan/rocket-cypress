@@ -1,9 +1,8 @@
 /// <reference types="Cypress" />
 import { destination, rewardProgram, searchBtn, errorContent } from '../support/main-page.helper';
 
-Cypress._.times(2, () => {
 describe('Landing page BST', () => {
-
+  Cypress.env('RETRIES', 3);
   context('Build confidence in Login and Form Fill', () => {
     before('should login with a randomly generated email', () => {
       cy.uiLogin();
@@ -63,5 +62,4 @@ describe('Landing page BST', () => {
       */
   });
 
-});
 });
