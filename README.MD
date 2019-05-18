@@ -37,6 +37,18 @@ Cypress._.times(100, () => {
 
 > Every test needs to be able to execute and fail in isolation. To test this you can put a `.only()` after any `describe`, `context` or `it` block and run the section by itself. You can also utilize `.skip()` to skip certain blocks.
 
+## **Pipeline and Dashboard**
+
+The project is setup to execute tests on CircleCI and record results at Cypress Dashboard.
+
+The builds can be examined at public [CircleCI link](https://circleci.com/gh/muratkeremozcan/rocket-cypress) .
+
+The test results (also builds) can be observed at public [Cypress Dashboard](https://dashboard.cypress.io/#/projects/khn1sp/runs).
+
+The dashboard provides ability to scrutinize every build, see screenshots in case of failures and see **video recordings** of the tests: [example test run](https://dashboard.cypress.io/#/projects/khn1sp/runs/4/specs).
+
+The pipeline is setup to run 2 CI machines. Each test spec will run in its own CI Debian instance. 
+
 ## FB api tests
 Go to Graph API Explorer at https://developers.facebook.com/tools/explorer.
 * Go to My Apps.

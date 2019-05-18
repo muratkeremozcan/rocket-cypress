@@ -122,8 +122,8 @@ export function selectDestination(destination = destinationData) {
   // the fields have to be typed slowly to replicate ux and avoid the 'type slowly' error
   cy.log('destination selection');
   mainPage.destination().clear().type(destination, { delay: 150 })
-  cy.wait('@destination');
-  mainPage.destination().type('{enter}');
+  cy.wait('@destination', {timeout: 10000});
+  mainPage.destination().type('{downarrow}{enter}');
 }
 
 export function selectRewards(rewardProgram = rewardData) {
