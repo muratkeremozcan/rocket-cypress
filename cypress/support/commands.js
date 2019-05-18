@@ -121,14 +121,14 @@ export function selectDestination(destination = destinationData) {
   cy.route('/rest/regions*').as('destination');
   // the fields have to be typed slowly to replicate ux and avoid the 'type slowly' error
   cy.log('destination selection');
-  mainPage.destination().clear().type(destination, { delay: 150 })
+  mainPage.destination().clear({force: true}).type(destination, { delay: 150 })
   mainPage.destination().type('{downarrow}{downarrow}{uparrow}{enter}');
   cy.wait('@destination', {timeout: 10000});
 }
 
 export function selectRewards(rewardProgram = rewardData) {
   cy.log('reward selection');
-  mainPage.rewardProgram().clear().type(rewardProgram).type('{downarrow}{enter}');
+  mainPage.rewardProgram().clear({force: true}).type(rewardProgram).type('{downarrow}{enter}');
 }
 
 export function selectGuests(numGuests) {
