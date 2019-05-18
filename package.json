@@ -14,11 +14,14 @@
   "devDependencies": {
     "cypress": "^3.3.0",
     "faker": "^4.1.0",
-    "fbgraph": "^1.4.4"
+    "fbgraph": "^1.4.4",
+    "@percy/cypress": "^1.0.9",
+    "cypress-plugin-retries": "^1.2.0"
   },
   "scripts": {
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "cypress:run-record": "cypress run --record --key 33983b08-614e-4f86-a7c8-e97c0d89cc58"
   },
   "repository": {
     "type": "git",

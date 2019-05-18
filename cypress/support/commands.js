@@ -31,7 +31,7 @@ export function uiLogin() {
   cy.visit('/');
   cy.wait('@currency', { timeout: 15000 });
 
-  mainPage.signUpDialog().should('be.visible');
+  mainPage.signUpDialog().should('be.visible', { timeout: 10000 });
   mainPage.emailField().type(userEmail);
   mainPage.signUpBtn().click();
   cy.wait('@postUserData');
@@ -68,16 +68,15 @@ roomData = randomNumUpTo(MAX_ROOMS);
 // note to use of default parameters. If a parameter is not specified, a randomized value will be passed in
 // if you need to do form validation, leave out fields, you can utilized the packaged functions that this function uses
 export function fillSearchForm(destination = destinationData , rewardProgram = rewardData, numGuests = guestData, numRooms = roomData) {
-
-    // we use siblings() here because the data to assert gets populated in a sibling DOM element
-    // we do not use 'pop up does not exist assertion' because there can be multiple types of popups:
-    // 'please type slowly' or 'no offers available'
     cy.selectDestination(destination);
-    mainPage.destination().siblings().should('contain', destination);
     
+    mainPage.destination().next().should('contain', destination, { timeout: 10000 });
+    // ensure that the destination is valid, otherwise we have error popup
+    mainPage.errorContent().should('not.exist');
+
     // verify that we are not getting the 'Please choose a valid reward program' popup
     cy.selectRewards(rewardProgram);
-    cy.get('.popover-content').should('not.exist');
+    mainPage.errorContent().should('not.exist');
     
     // drop downs are more idempotent in data checks since there are a limited amount of possible values, ok to assert as such:
     selectGuests(numGuests);
@@ -103,7 +102,6 @@ export function fillSearchForm(destination = destinationData , rewardProgram = r
       
     });
 
-
 }
 
 /* 
@@ -119,13 +117,13 @@ export function fillSearchForm(destination = destinationData , rewardProgram = r
  */
 export function selectDestination(destination = destinationData) {
   // define api routes to wait on, use them to eliminate flake in tests
-  // cy.server();
-  // cy.route('/rest/regions**').as('restCall');
-
+  cy.server();
+  cy.route('/rest/regions*').as('destination');
   // the fields have to be typed slowly to replicate ux and avoid the 'type slowly' error
   cy.log('destination selection');
-  mainPage.destination().clear().type(destination, { delay: 70 }).type('{enter}');
-  // cy.wait('@restCall');
+  mainPage.destination().clear().type(destination, { delay: 150 })
+  cy.wait('@destination');
+  mainPage.destination().type('{enter}');
 }
 
 export function selectRewards(rewardProgram = rewardData) {
