@@ -1,0 +1,21 @@
+# to use orbs, must use version >= 2.1
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.7.0
+workflows:
+  build:
+    jobs:
+      # install dependencies first (on 1 machine)
+      - cypress/install
+      # now run tests
+      - cypress/run:
+          # give this job a custom name for clarity
+          name: 'end-to-end tests'
+          requires:
+            # use previously installed dependencies
+            # to avoid installing them on each machine running tests
+            - cypress/install
+          record: true # record results to Cypress Dashboard
+          parallel: true # run tests in parallel
+          parallelism: 2 # use 3 CircleCI machines
+          group: 2 machines # name this group "3 machines"
