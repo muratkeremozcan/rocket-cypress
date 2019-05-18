@@ -2,6 +2,8 @@
   // this will be a tremendous help as the application changes -> from tech stack to minor face lift
   // https://docs.cypress.io/guides/references/best-practices.html#Selecting-Elements
 
+// import this 
+
 // login form
 export const signUpDialog = () => cy.get('.modal-body');
 export const emailField = () => cy.get('.row > :nth-child(1) > .form-control');
@@ -11,6 +13,7 @@ export const consentCookies = () => cy.get(':nth-child(2) > .btn');
 // search form
 export const destination = () => cy.get('.tt-input');
 export const rewardProgram = () => cy.get('.program-autosuggest-container > .rm-input-base');
+export const errorContent = () => cy.get('.popover-content');
 
 export const checkInDate = () => cy.get('.checkin.booking-date');
 export const checkOutDate = () => cy.get('.checkout.booking-date');
