@@ -35,7 +35,7 @@ The test results (also builds) can be observed at public [Cypress Dashboard](htt
 
 The dashboard provides ability to scrutinize every build, see screenshots in case of failures and see **video recordings** of the tests: [example test run](https://dashboard.cypress.io/#/projects/khn1sp/runs/4/specs).
 
-The pipeline is setup to run 2 CI machines. Each test spec will run in its own CI Debian instance.
+The pipeline is setup to run multiple CI machines. Each test spec will run in its own CI Debian instance.
 
 ## Additional notes
 Using headless execution, you can execute consistency tests on the specs to ensure flake-freeness.
