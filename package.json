@@ -20,9 +20,8 @@
   },
   "scripts": {
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "cypress:runci": "percy exec -- cypress run",
-    "cypress:run-record": "cypress run --record --key 33983b08-614e-4f86-a7c8-e97c0d89cc58"
+    "cypress:run": "percy exec -- cypress run",
+    "cypress:run-local": "cypress run"
   },
   "repository": {
     "type": "git",
