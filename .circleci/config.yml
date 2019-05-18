@@ -20,8 +20,6 @@
 #           parallelism: 3 # use 3 CircleCI machines
 #           group: 3 machines # name this group "3 machines"
 
-$ circleci config process .circleci/config.yml
-# Orb 'cypress-io/cypress@1' resolved to 'cypress-io/cypress@1.1.0'
 version: 2
 jobs:
   cypress/run:
