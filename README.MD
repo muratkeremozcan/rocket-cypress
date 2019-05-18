@@ -3,8 +3,9 @@
 This repository includes:
 
 * [Test Plan](test-plan.md)
-* [Test: UI login with fake account](./cypress/integration/landing-bst.spec..js)
-* [Test: Search functionality ](./cypress/integration/search-spec.js)
+* [Test: UI login with fake account](./cypress/integration/landing-smoke.spec.js)
+* [Test: e2e Search workflow](./cypress/integration/search-spec.js)
+* [Test: back to back Search](./cypress/integration/search-twice.spec.js)
 * [**Pipeline** with Circle CI](https://circleci.com/gh/muratkeremozcan/rocket-cypress)
 * [**Parallel CI test execution** & test results on Cypress Dashboard](https://dashboard.cypress.io/#/projects/khn1sp/runs)
 * [**Visual AI** tests with Percy.io in the CI](https://percy.io/Murat-Ozcan/rocket)
@@ -25,7 +26,6 @@ Execute tests headlessly:
 ```bash
 npx cypress run
 ```
-
 
 ## **Pipeline and Dashboard**
 
