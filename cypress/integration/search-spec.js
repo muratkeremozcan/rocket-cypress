@@ -3,12 +3,12 @@ import { searchBtn } from './../support/main-page.helper';
 
 describe('search', function () {
 
-  before('setup state: login and fill in the forms', function () {
+  before( function () {
     cy.uiLogin();
     cy.fillSearchForm();
   });
 
-  context('Search', function () {
+  context('state: login and fill in the forms', function () {
 
     it('should trigger search and get at least 1 result', function () {
       searchBtn().should('be.visible').click();
