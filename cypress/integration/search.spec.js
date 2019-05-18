@@ -1,5 +1,5 @@
 /// <reference types="Cypress" />
-import { searchBtn } from './../support/main-page.helper';
+import { searchBtn } from '../support/main-page.helper';
 
 describe('End to end search workflow', function () {
   Cypress.env('RETRIES', 3);
