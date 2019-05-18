@@ -1,4 +1,4 @@
-# to use orbs, must use version >= 2.1
+# # to use orbs, must use version >= 2.1
 # version: 2.1
 # orbs:
 #   cypress: cypress-io/cypress@1.7.0
@@ -25,6 +25,7 @@ jobs:
   cypress/run:
     docker:
     - image: cypress/base:10
+    record: true
     parallel: true
     parallelism: 3
     group: 3 machines
