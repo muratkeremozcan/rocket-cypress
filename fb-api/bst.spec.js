@@ -1,7 +1,7 @@
 var FB = require('fb');
 
+// insert your own token to test
 const token = FB.setAccessToken('EAAMIaKSfaiQBAEkzjKiolWXLZCNreEcFVc1P0M71qZAjUvjCYZCNHtBhjCFtCjWy1kcqckAl4edJa5kvujwKn4ZAmG1MuSgxYmZCjCnZCNQYbEiCVCCc7XIZBDSitTV4zi5xdlIXZBf79ZCX3fGZCmfDvmb2PGxs4Y7xL76SBZBCYdTDERT0d8ZCa7X6S9XLYZB280kVcZCzDlzFd0KXpcDoUafgqXu4arfZBrOXZCxp5k8IsCmC1wZDZD');
-
 
 FB.api('10100215638281494', 'get', function (res) {
   if(!res || res.error) {

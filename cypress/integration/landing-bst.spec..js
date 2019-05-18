@@ -18,4 +18,10 @@ describe('Landing page BST', () => {
 
   });
 
+  // TODO: add negative tests.
+  /*
+    The search fields should be validated in isolation
+
+  */
+
 });

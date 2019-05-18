@@ -2,10 +2,10 @@
 
 This exercise includes:
 
-* UI login with fake account
-* Search functionality tests
-* Test Plan
-* Facebook api tests
+* [Test Plan](test-plan.md)
+* [UI login with fake account](./cypress/integration/landing-bst.spec..js)
+* [Search functionality tests](./cypress/integration/search-spec.js)
+* [Facebook api tests](./fb-api/bst.spec.js)
 
 ## Getting started:
 Clone the repository and npm install:
@@ -38,9 +38,16 @@ Cypress._.times(100, () => {
 > Every test needs to be able to execute and fail in isolation. To test this you can put a .only() on any describe, context or it block and run the section by itself. You can also utilize .skip().
 
 ## FB api tests
+Go to Graph API Explorer at https://developers.facebook.com/tools/explorer.
+* Go to My Apps.
+* Click "+ Add a New App".
+* Setup a website app. 
+* create a test application and get an access token for it
+* copy the token to the `token` constant in the [spec]((./fb-api/bst.spec.js))
+
 Navigate to fb-api directory and execute with node.
 ```bash
 cd fb-api
 node bst.spec.js
 ```
-Alternatively, you can use QuokkaJS vsCode extension. Keyboard shortcut `ctrl+P >` then type Quokka start.
+Alternatively, you can use Quokka vsCode extension. Keyboard shortcut `ctrl+P >` then type Quokka start.
