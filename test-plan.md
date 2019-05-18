@@ -14,7 +14,7 @@ Responsibilities include:
 
 Coverage in this context will be defined as a *measurement of completeness and thoroughness based on a test model*.
 
-There can be various categories of coverage; the test model we base it on:
+There can be various categories of coverage per the test model:
 * Unit
 * Requirement
 * Workflow / Scenario
@@ -33,7 +33,7 @@ Assumptions made about the architecture:
 * Java back-end
 * Microservice architecture, hosted on AWS
 
-### **Risks based testing**
+### <a name="rbt"> **Risks based testing** </a> 
 
 No module is immune to improvement, and not everything can be tested.
 
@@ -41,7 +41,7 @@ Risk will be evaluated with 3 parameters on a case by case basis:
 * Probability of failure
 * Impact of failure
 * Effectiveness of re-test in case of failure. 
-  * > If effectiveness of re-test is high, this lowers risk.
+  > If effectiveness of re-test is high, risk is low.
 
 Instances where the value added by testing and risk is low will be treated as low priority for test. 
 
@@ -53,7 +53,7 @@ Use of BDD patterns will be encouraged in requirement specification. Test lead/e
 
 It is encouraged to take advantage of BDD patterns in tools & frameworks that support it. Examples include Jasmine, Karma and Mocha.
 
-Refer to **Risk based testing** for constraints and contingencies.
+Refer to [Risk Based Testing](#rbt) for constraints and contingencies.
 
 ### **Non-functional requirements**
 Test lead/expert/architect will collaborate with system architect and product owners in requirement elicitation activities.
