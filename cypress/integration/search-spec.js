@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 import { searchBtn } from './../support/main-page.helper';
 
-describe('search workflow', function () {
+describe('End to end search workflow', function () {
   Cypress.env('RETRIES', 3);
 
   it('should fill out the form, trigger search and assert the results or their absence)', function () {
