@@ -11,6 +11,7 @@ describe('Landing page BST', () => {
     it('should verify url and title', () => {
       cy.url().should('include', 'rocketmiles');
       cy.get('.rm-logo').should('exist').and('be.visible');
+      cy.percySnapshot('Landing Snapshot');
     });
 
     it('should populate the fields randomly and assert them isolation', () => {
