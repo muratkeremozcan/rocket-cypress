@@ -4,17 +4,14 @@ import { searchBtn } from './../support/main-page.helper';
 describe('search workflow', function () {
   Cypress.env('RETRIES', 3);
 
-  beforeEach('login, fill form and search', function() {
+  it('should fill out the form, trigger search and assert the results or their absence)', function () {
+
     cy.uiLogin();
     cy.fillSearchForm('Tokyo, Japan');
     searchBtn().should('be.visible').click();
     cy.wait('@destination', { timeout: 15000 });
     // for this timeout we need a System NFR requirement indicating how fast the search results should appear
     // setting it to high timeout because we do not want the tests to fail intermittently
-  });
-
-  it('should fill out the form, trigger search and get at least 1 result (if possible)', function () {
-
     cy.log('state: we have logged in, searched and we are asserting the results');
     cy.url().should('include', 'search');
 
@@ -40,19 +37,6 @@ describe('search workflow', function () {
       }
     });
 
-  });
-
-  it('should do 2 searches back to back', function () {
-    cy.log('state: we have logged in, did one search and got results. We are doing a 2nd search ');
-
-    cy.selectDestination();
-    cy.selectRewards();
-
-    searchBtn().should('be.visible').click();
-
-    cy.get('.hotel-result-container > ')
-      .its('length')
-      .should('be.gte', 1);
   });
 
 });
