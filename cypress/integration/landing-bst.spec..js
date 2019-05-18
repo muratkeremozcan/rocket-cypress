@@ -14,7 +14,7 @@ describe('Landing page BST', () => {
       cy.percySnapshot('Landing Snapshot');
     });
 
-    it('should populate the fields randomly and assert them isolation', () => {
+    it('should populate the fields randomly and assert them in isolation', () => {
       cy.fillSearchForm();
     })
 
