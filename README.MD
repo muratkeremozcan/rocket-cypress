@@ -59,7 +59,7 @@ To trigger the visual AI tests, you can push to the repository. If there are no 
 This is an open source project for educational purposes. We trust all parties to consume this information responsibly.
 
 To run locally you must first record the percy token in your environment variables:
-* [Linux](https://askubuntu.com/questions/58814/how-do-i-add-environment-variables/58828#58828): `sudo -H gedit /etc/environment` and paste the token. "PERCY_TOKEN" property should be in quotes.
+* [Linux](https://askubuntu.com/questions/58814/how-do-i-add-environment-variables/58828#58828)
 * [Mac](https://www.google.com/search?ei=kYriXN6lIczAsAWMhYOwDg&q=environment+variables+mac&oq=environment+variables+mac&gs_l=psy-ab.3..0i20i263l2j0j0i30l7.390633.391578..391707...0.0..0.66.227.4....1..0....1..gws-wiz.......0i71j35i39j0i67.0alC1orOG68#kpvalbx=1) 
 * [Windows](https://www.computerhope.com/issues/ch000549.htm) 
 
