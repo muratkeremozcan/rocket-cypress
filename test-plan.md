@@ -16,7 +16,7 @@ Coverage in this context will be defined as a *measurement of completeness and t
 
 There can be various categories of coverage per the test model:
 * Unit
-* Requirement
+* Requirement: in this context, *the conditions and capabilities needed by a stakeholder*
 * Workflow / Scenario
 * Non-functional requirement (NFR) which may include highest priority quality attributes for the system, such as:
   * Performance & Scalability
@@ -40,10 +40,10 @@ No module is immune to improvement, and not everything can be tested.
 Risk will be evaluated with 3 parameters on a case by case basis:
 * Probability of failure
 * Impact of failure
-* Effectiveness of re-test in case of failure. 
+* Effectiveness of re-test in case of failure
   > If effectiveness of re-test is high, risk is low.
 
-Instances where the value added by testing and risk is low will be treated as low priority for test. 
+Instances where the value-added by testing and risk are low, will be treated as low priority for test. 
 
 ### **Features to be tested**
 
@@ -103,7 +103,7 @@ Testing expects reliable behavior from the SUT; controllable -> internally relia
 
 Due to the nature of the SUT, the observability of consistent results may not always be possible. Utilize visual-AI tests where it can address this problem. For cases visual-UI cannot add value, manual testing will be utilized.
 
-[Systematic Exploratory Testing](https://www.developsense.com/resources.html#exploratory) will be encouraged for all test activities.
+[Systematic Exploratory Testing](https://www.developsense.com/resources.html#exploratory) will be encouraged for all manual test activities.
 
 Manual testing will be preferred over unreliable automation due to the SUT nature, or automation that costs more in maintenance than value-add in fault-detection.
 
@@ -113,20 +113,20 @@ End to end test automation engineering and test script management:
 * Functional quality attributes of the test code:
   * Correctness in properly validating the SUT
   * Effectiveness in fault detection
-  * Mimimal maintanence required: tests should be less likely to fail on every granular development change.
+  * Mimimal maintanence required: tests should be less likely to fail on every granular development change
     > This is an elegant balance between the test being detailed enough to find faults and not being so detailed that they will require additional maintenance.
     > Exploratory testing will fill the gap for any detail left out in automated test for the sake of lowering test upkeep.
-* Non functional quality attributes of the test code:
+* Non-functional quality attributes of the test code:
   * Maintainable, understandable, readable
   * Test redundancy should be minimized, but should be considered for cases where it will increase modularity and reduce diagnosis time. When a defect occurs, ideally it should fail a minimal amount of tests because the tests should be as modular as they can. 
 
-### **Test States** 
+### **Test States**
 
-**Repeatability**: tests must setup state, perform the test and leave the environment in a clean state which does not effect the execution of the next test. If a test clutters the system in every execution, this is manual test candidate. Tests must also not clash with each other: multiple testers, pipelines must be able to execute the same test at the same time. If this is not possible, these group of tests should be executed once a day, preferably outside of business hours.
+**Repeatability**: tests must setup state, perform the test and leave the environment in a clean state which does not effect the execution of the next test. If a test clutters the system in every execution, leaves it in a state that cannot be reset, this is a manual test candidate. Tests must also not clash with each other: multiple testers, pipelines must be able to execute the same test at the same time. If this is not possible, these group of tests should be executed once a day in a pipeline cron job, preferably outside of business hours.
 
-Each test that must change the state of the environment has to be used as a setup-state-test and must make possible for the test environment to be able to be cleaned up for the next test.
+Each test that must change the state of the environment has to be used as a setup-state-test and must ensure that the test environment is  able to be cleaned up before the next test.
 
-UI tests should not repeat themselves as setup tests; API test should be utilized wherever a UI test has to be used as a setup for another test.
+It is preferred that UI tests do not repeat themselves as setup tests; API test should be utilized wherever a UI test has to be used as a setup for another test.
 
 **Before all vs after all**: before all preferred; wherever possible, the test itself should take responsibility that it starts in a clean environment. However, as emphasized above, tests must not make it so that after their execution the next test cannot clean up the enviroment.
 
@@ -138,17 +138,18 @@ UI tests should not repeat themselves as setup tests; API test should be utilize
   
     
 ### **Test flake**
-Tests must produce consistent results every time. Pipeline execution is the quorum.
+Tests must produce consistent results every time. Repeatable pipeline execution results is the quorum.
   
-If a test cannot produce reliable results, it reduces confidence in the tests and requires maintenance which reduces all value. In these cases it is best to manual test.
+If a test cannot produce reliable results, it reduces confidence in the tests and requires maintenance which reduces all value. In these cases it is best to manually test the functionality.
 
-**Locally identifying test flake**: headless execution in an OS that replicates pipeline CI machine is preferred; Linux & Mac will behave more similar to the pipeline than Windows -with the exception of windows docker containers if you are using one. Headless execution will reveal more of the test flake. There are various ways to repeatedly execute a test spec, one example from cypress is using the lodash library  `Cypress._.times( <times to repeat>, () => { <your test spec code> })`. This must be utilized before pushing any code for a merge request.
+**Locally identifying test flake**: headless execution in an OS that replicates pipeline CI machine is preferred; Linux & Mac will behave more similarly to the pipeline than Windows -with the exception of windows docker containers if you are using one. Headless execution will reveal more of the test flake. There are various ways to repeatedly execute a test spec, one example from Cypress is using the lodash library  `Cypress._.times( <times to repeat>, () => { <your test spec code> })`. This must be utilized before pushing any code for a merge request.
 
 **Identifiying test flake in the pipeline**: use consistency testing; if pipeline runners allow it, run as many test specs in parallel in a pipeline job, and then repeat the stage. Example: 5 pipelines in parallel for a job, the stage repeats 5 times, resulting in 25 executions of the test spec.
 
 Some frameworks also have access to the API layer. When doing ui-e2e testing, sniff the API and wait for calls to happen before making UI assertions. It is best to have full assertion API tests separated to build confidence that the APIs work before running the UI tests that rely on them. This is so that UI tests can be isolated to UI failures when the APIs are working well. It is preferable not to do only-UI testing without any awareness of the APIs.
 
-**Test retry**: Many frameworks have a retry mechanism. These should be utilized as a last resort if the test is still very valuable to have despite flakiness that cannot be worked around. It is acceptable to use retry mechanism if the inconsistent test result is due to a -hopefully temporary- unreliability in the system. In these cases, defects should be entered against the system for the sporadic issues, and work around them in automated testing with retry mechanism. Retry can also be implemented at test code level using recursion, be sure to use counters and only retry a limited number of times.
+**Test retry**: Many frameworks have a retry mechanism. These should be utilized as a last resort if the test is still very valuable to have despite flakiness that cannot be worked around. It is acceptable to use retry mechanism if the inconsistent test result is due to a -hopefully temporary- unreliability in the system. In these cases, defects should be entered against the system for the sporadic issues, and work around them in automated testing with retry mechanism. Retry can also be implemented at test code level using recursion, be sure to use counters and only retry a limited number of times. 
+Finally, if all the above issues are addressed, retries can be included optionally.
 
 ### **CI: branch, master, preview | prod**
 
@@ -161,10 +162,11 @@ Master: ensure to run against DEV, INT - depending on the project there may be m
 Preview & Prod: you can automate in these stages by running a subset or full suite of tests. This depends on the needs of the SUT. Pay attention to states that have to be setup, users that have to created and ensure that the test execution does not impact analytics.
 
 Collaborate strongly with the devOps team in all pipeline automation activities to ensure performant and lean test execution.
-Utilize parallel pipelines and load balancing to speed up tests. Some frameworks offer this as a service, at minimal you can specify what specs should be run in which CI machine and execute in parallel to reduce pipeline execution time.
+Utilize parallel pipelines and load balancing to speed up tests. Some frameworks offer this as a service, at minimal you can specify what specs should be run in which CI machine and execute in parallel to reduce pipeline execution time. Pipeline execution duration must always take precedence over local execution duration.
 
 ### **Test data, deliverables and documentation**
-All test data and deliverables will be stored in the repository and the pipeline execution results.
+All test data and deliverables will be stored in the repository and the pipeline execution results. 
+If a test management tool easily integrates with the automation environment without requiring overhead in maintenance, it can be utilized.
 
 Documentation of test designs, test processes can be in its own repository.
 
@@ -176,5 +178,11 @@ Test exit criteria relies on 3 parameters:
 
 ### **Frameworks, tools**
 Consider using the latest tech that can be good fit for the projects. Tools and frameworks completely rely on the needs of the team and the SUT; use what works best and keep evaluating the tech scene for things that can work better.
+
+When proposing migration, consider:
+* What is the recurring time-cost of status quo?
+* What is the time-cost of migration to a newer framework?
+  * What is the recurring time-cost reduced by the new framework?
+* Monetize the delta.
 
 Some of the modern web development test frameworks & tools include: Cypress, Protractor, Puppeteer, Jasmine, Karma, Mocha, Chai, Sinon, WallabyJs, Stryker (mutation), K6-loadImpact (performance), Sn1per (pentest).
